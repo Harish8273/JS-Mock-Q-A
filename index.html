@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS INTERVIEW Q&A</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <center>
+        <h1>JS INTERVIEW Q&A</h1>
+    </center>
+
+    <pre class="box">
+        1. Difference between “ == “ and “ === “ operators.
+
+var x = 10;
+var y = "10";
+
+console.log(x===y);
+
+- Both are comparison operators and they return boolean values always. The difference
+between both the operators is that “==” is used to compare values whereas “ === “ is
+used to compare both value and datatype.
+
+- output will be false because both value and datatype are not same.
+
+    </pre>
+
+    <pre class="box">
+        2. What is a spread operator?
+
+- The JavaScript spread operator (...) allows us to quickly copy all or part of an existing array or object into another array
+ or object.
+
+- The spread operator is often used in combination with destructuring.
+
+const array1 = [1,2,3];
+const array2 = [4,5,6];
+const combinedarray = [...array1, ...array2];
+
+console.log(combinedarray)
+    </pre>
+
+    <pre class="box">
+        3. What are the differences between var, let and const?
+
+- Variables declared with "var" in Javascript are function scoped. It can be redeclared and reinitialized.
+
+- Variables declared with "let & const" in Javascript are blocked scoped. "let" cannot be redeclared but it can be reinitialized.
+But "const" cannot be redeclared and cannot be reinitialized.
+    </pre>
+
+    <pre class="box">
+        4. What is execution context?
+
+- Each and every browser is having a JavaScript Engine, example Google is having V8 engine,
+Internet Explorer is having Chakra and Mozilla Firefox is having Spider Monkey.
+<center><img height="120px" width="250px" src="./image/js work.png" alt="js">
+</center>
+<center><img height="120px" width="250px" src="./image/execution context.png" alt="execution context">
+</center><b>Execution Context-</b> The environment in which our code is executed and is evaluated. ===> Global execution context default
+
+- Javascript engine creates the global execution context before it starts to execute any code. 
+- Variables, and functions that is not inside any function. A new execution context gets created every time a function is executed.
+-During the Execution Context run-time, the specific code gets parsed by a parser, the variables
+and functions are stored in memory, executable byte-code gets generated, and the code gets
+executed.
+- There are two kinds of Execution Context in JavaScript:
+● Global Execution Context (GEC)
+● Function Execution Context (FEC)
+
+- The moment code gets executed GEC gets created and gets pushed to Call Stack. Inside the
+global or functional execution context, there are two phases : Memory allocation (Creation
+Phase) and Code execution (Execution Phase).
+Inside Memory allocation, the variables declared using var keyword get memory allocated as
+undefined in global scope and variables declared using let or const gets their memory allocated
+as undefined in block scope.
+
+-That is the reason why we can access the variables before initialization declared using var, it
+will give undefined.
+
+-But if we will try to access the variables using let const before their initialization then it will
+give Reference Error because these variables will be in block scope and can not be accessed
+until unless they are not initialized. This is also known as temporal dead zone.
+Whereas, functions gets memory allocated as their actual value defined in code. Inside Code
+Execution, variables will get their actual value assigned to them. And functions will create a
+functional execution context.
+
+-The moment this FEC will be created, it will be pushed to Call stack and once the execution of
+the function is over then this FEC will be removed from the call stack and the point of
+execution will again be moved to GEC.
+    </pre>
+
+    <pre class="box">
+        5. What is meant by first class functions ?
+
+        - In javascript we can assign a function to a variable . Also, as a methods.
+
+        // assigning a function to the variable example
+
+let harry = function(){
+    console.log("My nickname is Harry")
+}
+harry();
+
+
+        - Assigning a method in javascript is super easy as well. Similar to how we can assign a function to a variable
+         we can assign a function as a value to a key in an object. 
+
+         // assigning a function to the object example
+
+let aboutme = {
+    fname : "Harry",
+    lname : "kumar",
+    qualification : function(){
+        console.log("I did B.tech in Mechanical Engineering");
+    },
+    sex : "Male",
+}
+aboutme.qualification()
+
+        - Pass a function as a argument.
+
+        // Pass a function as a argument.
+
+const myName = () =>{
+    return "Harry";
+}
+const greeting = (sayHi, name) => {
+    console.log(sayHi() + " " + name);
+}
+greeting(myName, "Harish Kumar");
+
+        - Since function are first class citizens in javascript, we are able to pass them.   
+        - Returning functions- This is a key concept when it comes to functional programming.
+
+        // returning function or callback function..
+
+function a(){
+    return function b(){
+        console.log("I will be expert in Javascript one day.")
+    }
+}
+// a()();
+
+const c = a();
+
+c();
+
+        So we can say that "function is first class citizen in javascript".
+    </pre>
+
+    <pre class="box">
+       6.  What are closures? Give an example of closures?
+
+       - A closure is the combination of a function and the lexical environment within which that function was declared.
+
+       - Closure in action that is inner function can have access to the outer function variables/parameters as well as
+        all the global variables.
+
+       - The return statement doses not execute the inner function- function is executed only when followed by (),
+        but rather the return statement returns the entire body of the function.
+
+        const outerFun = (a) => {
+            let b = 10;
+            const innerFun = () => {
+                let sum = a + b;
+                console.log(`The sum of two number a & b is ${sum}`);
+            }
+            innerFun();
+        }
+        outerFun(5);
+
+        output- The sum of two number a & b is 15
+    </pre>
+
+    <pre class="box">
+        7. Explain call(), apply() and, bind() methods. Give an example of call(), apply(), bind() ?
+
+        These all three methods are used to invoke a function where we are supposed to pass an object
+as first argument and at the time of definition we don't have mention this object as a parameter
+and we can access the values of object by using this keyword in function definition.
+
+- Call is a function that helps you change the context of the invoking function. In layperson's terms,
+ it helps you replace the value of this inside a function with whatever value you want.
+
+ - Apply is very similar to the call function. The only difference is that in apply you can pass an array as an argument list.
+
+- Bind is a function that helps you create another function that you can execute later with the
+ new context of this that is provided.  
+
+ let userDetails = {
+    name: "Harish",
+    age: 24,
+    designation: "Web developer",
+}
+let printDetails= function(state, country){
+    console.log(this.name+ " " +"from"+ " " +state+ " "+country)
+}
+printDetails.call(userDetails, "UttarPradesh", "India");
+
+let userDetails2 = {
+    name: "Ashish",
+    age: 22,
+    designation: "student"
+    }
+    // function borrowing
+printDetails.call(userDetails2, "Delhi", "India")
+
+// Apply
+
+printDetails.apply(userDetails2, ["Delhi", "India"]);
+
+// Bind
+
+let newfun = printDetails.bind(userDetails, "Delhi", "India")
+newfun;
+    </pre>
+</body>
+<script src="./main.js"></script>
+
+</html>
